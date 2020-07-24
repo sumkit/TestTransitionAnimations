@@ -36,20 +36,20 @@ public class FragmentA extends Fragment {
         }
         mAdapter = new MyRecyclerViewAdapter(this, data);
 
-        MaterialContainerTransform transform = new MaterialContainerTransform(getContext());
-        transform.setDuration(500);
-        setSharedElementReturnTransition(transform);
-        setExitSharedElementCallback(new SharedElementCallback() {
-            @Override
-            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                View view = mAdapter.getClickedItem();
-                if (view != null) {
-                    sharedElements.clear();
-                    String name = names.get(0);
-                    sharedElements.put(name, view);
-                }
-            }
-        });
+        // MaterialContainerTransform transform = new MaterialContainerTransform(getContext());
+        // transform.setDuration(500);
+        // setSharedElementReturnTransition(transform);
+        // setExitSharedElementCallback(new SharedElementCallback() {
+        //     @Override
+        //     public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+        //         View view = mAdapter.getClickedItem();
+        //         if (view != null) {
+        //             sharedElements.clear();
+        //             String name = names.get(0);
+        //             sharedElements.put(name, view);
+        //         }
+        //     }
+        // });
     }
 
     @Override

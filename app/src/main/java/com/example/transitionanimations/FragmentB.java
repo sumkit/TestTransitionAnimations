@@ -20,37 +20,35 @@ import java.util.List;
 import java.util.Map;
 
 public class FragmentB extends Fragment {
-    private ImageView mImageView;
-    private final String mTransitionName;
 
-    public FragmentB(String transitionName) {
-        mTransitionName = transitionName;
-    }
+    // public static final String TRANSITION_NAME = "fragment_b_transition_name";
+
+    private ImageView mImageView;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        MaterialContainerTransform transform = new MaterialContainerTransform(getContext());
+        MaterialContainerTransform transform = new MaterialContainerTransform();
         transform.setDuration(500);
         setSharedElementEnterTransition(transform);
-        setEnterSharedElementCallback(new SharedElementCallback() {
-            @Override
-            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                if (mImageView != null) {
-                    sharedElements.clear();
-                    String name = names.get(0);
-                    sharedElements.put(name, mImageView);
-                }
-            }
-        });
+        // setEnterSharedElementCallback(new SharedElementCallback() {
+        //     @Override
+        //     public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+        //         if (mImageView != null) {
+        //             sharedElements.clear();
+        //             String name = names.get(0);
+        //             sharedElements.put(name, mImageView);
+        //         }
+        //     }
+        // });
     }
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        postponeEnterTransition();
+        // postponeEnterTransition();
         return inflater.inflate(R.layout.fragment_b, container, false);
     }
 
@@ -58,15 +56,15 @@ public class FragmentB extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         mImageView = view.findViewById(R.id.image);
         mImageView.setImageResource(R.drawable.ic_launcher_foreground);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mImageView.setTransitionName(mTransitionName);
-        }
-        mImageView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                startPostponedEnterTransition();
-                return true;
-            }
-        });
+        // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        //     view.setTransitionName(TRANSITION_NAME);
+        // }
+        // mImageView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+        //     @Override
+        //     public boolean onPreDraw() {
+        //         startPostponedEnterTransition();
+        //         return true;
+        //     }
+        // });
     }
 }
