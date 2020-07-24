@@ -68,4 +68,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             imageView = (ImageView) itemView;
         }
     }
+
+    public View getClickedItem() {
+        return mClickedView;
+    }
 }
