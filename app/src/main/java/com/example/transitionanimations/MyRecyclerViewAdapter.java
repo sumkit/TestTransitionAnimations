@@ -37,7 +37,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 Fragment b = new FragmentB(name);
                 mClickedView = view;
                 FragmentTransaction transaction = mFragment.getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, b);
+                transaction.replace(R.id.container, b);
                 transaction.addSharedElement(mClickedView, name);
                 transaction.addToBackStack(null).setReorderingAllowed(true);
                 transaction.commit();
