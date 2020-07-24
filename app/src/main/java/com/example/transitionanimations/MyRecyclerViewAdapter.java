@@ -7,23 +7,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.SharedElementCallback;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.transition.MaterialContainerTransform;
-
 import java.util.List;
-import java.util.Map;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
     private List<String> mData;
     private final Fragment mFragment;
     private final Context mContext;
-
     private View mClickedView;
-    private String mClickedName;
 
     MyRecyclerViewAdapter(Fragment fragment, List<String> data) {
         mContext = fragment.getContext();
