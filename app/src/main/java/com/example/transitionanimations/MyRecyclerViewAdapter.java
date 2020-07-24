@@ -16,6 +16,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private List<String> mData;
     private final Fragment mFragment;
     private final Context mContext;
+    private View mClickedView;
 
     MyRecyclerViewAdapter(Fragment fragment, List<String> data) {
         mContext = fragment.getContext();
@@ -26,31 +27,33 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ImageView imageView = new ImageView(mContext);
+        final ImageView imageView = new ImageView(mContext);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(200, 200));
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(final View view) {
+                String name = view.getTransitionName();
+                Fragment b = new FragmentB(name);
+                mClickedView = view;
+                FragmentTransaction transaction = mFragment.getParentFragment().getChildFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, b);
+                transaction.addSharedElement(mClickedView, name);
+                transaction.addToBackStack(null).setReorderingAllowed(true);
+                transaction.commit();
+            }
+        });
+
         return new ViewHolder(imageView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        String name = Integer.toString(position);
-        holder.imageView.setTransitionName(name);
-
         holder.imageView.setImageResource(R.drawable.ic_launcher_foreground);
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(final View view) {
-                Fragment b = new FragmentB();
-                mFragment.getParentFragment().getChildFragmentManager()
-                    .beginTransaction()
-                    .addSharedElement(holder.imageView, "fragment_b_transition_name")
-                    .replace(R.id.fragment_container, b, "B_TAG")
-                    .addToBackStack("B_fragment")
-                    //.setReorderingAllowed(true)
-                    .commit();
-            }
-        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            String name = Integer.toString(position);
+            holder.imageView.setTransitionName(name);
+        }
     }
 
     @Override
