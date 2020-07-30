@@ -5,19 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.SharedElementCallback;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.transition.MaterialContainerTransform;
-
-import java.util.List;
-import java.util.Map;
 
 public class FragmentB extends Fragment {
     private ImageView mImageView;
@@ -35,7 +30,7 @@ public class FragmentB extends Fragment {
         MaterialContainerTransform transform = new MaterialContainerTransform(getContext());
         transform.setDuration(500);
         setSharedElementEnterTransition(transform);
-        setEnterSharedElementCallback(new SharedElementCallback() {
+        /*setEnterSharedElementCallback(new SharedElementCallback() {
             @Override
             public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
                 if (mImageView != null) {
@@ -44,13 +39,12 @@ public class FragmentB extends Fragment {
                     sharedElements.put(name, mImageView);
                 }
             }
-        });
+        }); */
     }
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        postponeEnterTransition();
         return inflater.inflate(R.layout.fragment_b, container, false);
     }
 
@@ -61,12 +55,5 @@ public class FragmentB extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mImageView.setTransitionName(mTransitionName);
         }
-        mImageView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                startPostponedEnterTransition();
-                return true;
-            }
-        });
     }
 }
